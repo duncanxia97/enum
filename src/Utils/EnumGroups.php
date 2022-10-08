@@ -13,6 +13,7 @@ class EnumGroups
     public static function setGroups(string $class, string|int|null $groupName, string|int $name, $value): bool
     {
         self::$groups[$class][$groupName][$name] = $value;
+
         return true;
     }
 

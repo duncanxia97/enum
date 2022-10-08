@@ -6,6 +6,10 @@
 
 namespace Fatbit\Enums\Interfaces;
 
+/**
+ * @property int    $value
+ * @property string $name
+ */
 interface EnumCaseInterface
 {
     /**
