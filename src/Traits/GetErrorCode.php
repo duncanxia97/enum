@@ -18,8 +18,6 @@ use ReflectionEnumUnitCase;
  */
 trait GetErrorCode
 {
-    use EnumCaseGet;
-
     /**
      * 获取枚举解释
      *

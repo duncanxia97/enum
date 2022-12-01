@@ -12,7 +12,7 @@ namespace Fatbit\Enums\Interfaces;
  * @property int    $value
  * @extends \IntBackedEnum
  */
-interface ErrorCodeInterface extends EnumCaseInterface
+interface ErrorCodeInterface
 {
     /**
      * 获取错误信息
