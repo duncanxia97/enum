@@ -1,3 +1,8 @@
+### 下载安装
+~~~bash
+composer require fatbit/enums
+~~~
+
 ### 一. 常规枚举
 
 > 使用方法和php enum官方一样,你只需要引用"EnumCaseGet"和实现"EnumCaseInterface"即可
