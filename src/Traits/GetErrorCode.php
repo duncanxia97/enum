@@ -75,12 +75,37 @@ trait GetErrorCode
     public function getCode(): int
     {
         $code   = $this->value;
-        $prefix = $this->getErrorCodePrefix();
+        $prefix = $this->getErrorCodePrefix()?->prefix;
         if ($prefix === null) {
             return $code;
         }
 
-        return (int)((string)($prefix->prefix) . (string)($code));
+        return (int)((string)($prefix) . (string)($code));
+    }
+
+    /**
+     * 获取错误码前缀注释
+     *
+     * @author XJ.
+     * Date: 2022/12/1 0001
+     * @return string|null
+     */
+    public function getPrefixDesc(): ?string
+    {
+        return $this->getErrorCodePrefix()?->desc;
+    }
+
+
+    /**
+     * 获取错误码前缀
+     *
+     * @author XJ.
+     * Date: 2022/12/1 0001
+     * @return int|null
+     */
+    public function getPrefixCode(): ?int
+    {
+        return $this->getErrorCodePrefix()?->prefix;
     }
 
 

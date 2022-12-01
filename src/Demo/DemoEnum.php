@@ -14,8 +14,11 @@ enum DemoEnum: int implements EnumCaseInterface
 {
     use EnumCaseGet;
 
-    #[EnumCase(desc: '系统错误', group: 'sys', ext: ['color' => 'red'])]
+    #[EnumCase(desc: '系统错误', name:'SYS_ERR', group: 'sys', ext: ['color' => 'red'])]
     case SYSTEM_ERROR = 500;
+
+    #[EnumCase(desc: '系统错误2', group: 'sys', ext: ['color' => 'red'])]
+    case SYSTEM_ERROR2 = 501;
 
     #[EnumCase(desc: '不存在')]
     case NOT_FOUND = 404;
