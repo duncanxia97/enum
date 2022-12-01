@@ -52,7 +52,7 @@ interface EnumCaseInterface
      *
      * @return array|int|string
      */
-    public function group(string|int $groupName, string|int $name = null): array|int|string|null;
+    public static function group(string|int $groupName, string|int $name = null): array|static|null;
 
     /**
      * 将枚举转换为数组

@@ -126,7 +126,7 @@ trait EnumCaseGet
      * @return array
      * @throws \ReflectionException
      */
-    protected static function loadGroups(object $enum): array
+    protected static function loadGroups(object|string $enum): array
     {
         $enum = new ReflectionEnum($enum);
         if (EnumGroups::issetGroups($enum->getName())) {
@@ -136,7 +136,7 @@ trait EnumCaseGet
         foreach ($enumCases as $enumCase) {
             /** @var self $case */
             $case = $enumCase->getValue();
-            EnumGroups::setGroups($enum->getName(), $case->getEnumCase()?->group, $case->name(), $case->getCaseData());
+            EnumGroups::setGroups($enum->getName(), $case->getEnumCase()?->group, $case->name(), $case);
         }
 
         return EnumGroups::getGroups($enum->getName());
@@ -148,15 +148,17 @@ trait EnumCaseGet
      * @author XJ.
      * Date: 2022/10/6 0006
      *
-     * @param $groupName
+     * @param string|int      $groupName
+     * @param string|int|null $name
      *
-     * @return array|int|string
+     * @return array|EnumCaseGet
+     * @throws \ReflectionException
      */
-    public function group(string|int $groupName, string|int $name = null): array|int|string|null
+    public static function group(string|int $groupName, string|int $name = null): array|static|null
     {
-        $groups = self::loadGroups($this);
+        $groups = self::loadGroups(static::class);
         if ($name !== null) {
-            return $this->group($groupName)[$name] ?? null;
+            return self::group($groupName)[$name] ?? null;
         }
 
         return $groups[$groupName] ?? null;
