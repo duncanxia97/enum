@@ -118,7 +118,7 @@ enum DemoErrorCode: int implements ErrorCodeInterface
 }
 ~~~
 
-#### 1.函数
+#### 1. 错误码函数
 
 > 获取错误码
 > 
