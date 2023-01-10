@@ -151,7 +151,10 @@ enum DemoErrorCode: int implements ErrorCodeInterface
 >
 ~~~php
 
+
 // 获取错误码前缀注释
 \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getPrefixDesc(); // 系统错误码
+
+
 
 ~~~
