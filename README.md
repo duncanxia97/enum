@@ -67,6 +67,7 @@ enum DemoEnum: int implements EnumCaseInterface
 ~~~php
 
 // 获取枚举分组 获取到的数据是以枚举名称为键的数组 值为该枚举对象, 当然转换成json也就是他的枚举值
+
 \Fatbit\Enums\Demo\DemoEnum::group('sys'); // ['SYSTEM_ERROR' => \Fatbit\Enums\Demo\DemoEnum::SYSTEM_ERROR,'SYSTEM_ERROR2' => \Fatbit\Enums\Demo\DemoEnum::SYSTEM_ERROR2]
 \Fatbit\Enums\Demo\DemoEnum::group('sys')['SYSTEM_ERROR']->desc() // 系统错误
 
@@ -147,14 +148,12 @@ enum DemoErrorCode: int implements ErrorCodeInterface
 
 ~~~
 
+
 > 获取错误码前缀注释
 >
 ~~~php
 
-
 // 获取错误码前缀注释
 \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getPrefixDesc(); // 系统错误码
-
-
 
 ~~~
