@@ -157,3 +157,10 @@ enum DemoErrorCode: int implements ErrorCodeInterface
 \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getPrefixDesc(); // 系统错误码
 
 ~~~
+
+## 鸣谢
+
+ <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" width = "200" height = "218.6" alt="图片名称" align=center />
+
+- 感谢 `JetBrains` 提供的IDE支持！
+- 相关: [JetBrains网站](https://www.jetbrains.com/?from=apiDoc)
