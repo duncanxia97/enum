@@ -42,15 +42,20 @@ trait EnumCaseGet
      */
     public function __call(string $name, array $arguments)
     {
-        $name = strtolower($name);
-        $pos  = strpos($name, 'get');
+        $ext = $this->ext();
+        $pos  = stripos($name, 'get');
         if ($pos === 0) {
             $getKey = substr($name, 3);
 
-            return $this->ext($getKey);
+            if (isset($ext[$getKey])) {
+                return $ext[$getKey];
+            }
+        }
+        if (isset($ext[$name])) {
+            return $ext[$name];
         }
 
-        return parent::__call($name, $arguments);
+        return null;
     }
 
     /**
@@ -84,7 +89,7 @@ trait EnumCaseGet
     {
         return [
             'name'  => $this->name(),
-            'value' => $this->value,
+            'value' => $this->value ?? null,
             'desc'  => $this->desc(),
             'group' => $this->getEnumCase()->group,
             'ext'   => $this->ext(),
