@@ -13,6 +13,7 @@ use ReflectionEnumUnitCase;
 
 trait EnumCaseGet
 {
+    use GetEnumAttributes;
 
     /**
      * 获取枚举解释
@@ -20,15 +21,13 @@ trait EnumCaseGet
      * @author XJ.
      * Date: 2022/10/6 0006
      *
-     * @param $get
+     * @param int $get
      *
      * @return EnumCase|null
      */
-    protected function getEnumCase($get = 0): ?EnumCase
+    protected function getEnumCase(int $get = 0): ?EnumCase
     {
-        return (new ReflectionEnumUnitCase($this, $this->name))
-                   ->getAttributes(EnumCase::class)[$get]
-                   ?->newInstance() ?? null;
+        return $this->getEnumCaseAttribute(EnumCase::class, $get);
     }
 
     /**
@@ -43,7 +42,7 @@ trait EnumCaseGet
     public function __call(string $name, array $arguments)
     {
         $ext = $this->ext();
-        $pos  = stripos($name, 'get');
+        $pos = stripos($name, 'get');
         if ($pos === 0) {
             $getKey = substr($name, 3);
 

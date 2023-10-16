@@ -18,22 +18,21 @@ use ReflectionEnumUnitCase;
  */
 trait GetErrorCode
 {
+    use GetEnumAttributes;
+
     /**
      * 获取枚举解释
      *
      * @author XJ.
      * Date: 2022/10/6 0006
      *
-     * @param $get
+     * @param int $get
      *
      * @return ErrorCodePrefix|null
      */
-    protected function getErrorCodePrefix($get = 0): ?ErrorCodePrefix
+    protected function getErrorCodePrefix(int $get = 0): ?ErrorCodePrefix
     {
-        $res = (new ReflectionEnum($this))
-                   ->getAttributes(ErrorCodePrefix::class)[$get] ?? null;
-
-        return $res?->newInstance();
+        return $this->getEnumAttribute(ErrorCodePrefix::class, $get);
     }
 
     /**
@@ -42,15 +41,13 @@ trait GetErrorCode
      * @author XJ.
      * Date: 2022/10/6 0006
      *
-     * @param $get
+     * @param int $get
      *
      * @return EnumCase|null
      */
-    protected function getErrorCode($get = 0): ?ErrorCode
+    protected function getErrorCode(int $get = 0): ?ErrorCode
     {
-        return (new ReflectionEnumUnitCase($this, $this->name))
-                   ->getAttributes(ErrorCode::class)[$get]
-                   ?->newInstance() ?? null;
+        return $this->getEnumCaseAttribute(ErrorCode::class, $get);
     }
 
     /**
