@@ -158,6 +158,34 @@ enum DemoErrorCode: int implements ErrorCodeInterface
 
 ~~~
 
+二. 获取枚举注解
+
+>
+> 使用 **GetEnumAttributes** 引用trait
+>
+
+~~~php
+
+use Fatbit\Enums\Annotations\ErrorCode;
+use Fatbit\Enums\Annotations\ErrorCodePrefix;
+
+// 获取枚举对象注解 返回是一个数组
+/** @var ErrorCodePrefix[]|array $res */
+$res = \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getEnumAttributes(ErrorCodePrefix::class);
+// 获取枚举对象注解 返回是一个对象
+/** @var ErrorCodePrefix|null $res */
+$res = \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getEnumAttribute(ErrorCodePrefix::class);
+
+// 获取枚举注解 返回是一个数组
+/** @var ErrorCode[]|array $res */
+$res = \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getEnumCaseAttributes(ErrorCode::class);
+// 获取枚举注解 返回是一个对象
+/** @var ErrorCode|null $res */
+$res = \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getEnumCaseAttribute(ErrorCode::class);
+
+
+~~~
+
 ## 鸣谢
 
  <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" width = "200" height = "218.6" alt="图片名称" align=center />
