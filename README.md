@@ -162,6 +162,7 @@ enum DemoErrorCode: int implements ErrorCodeInterface
 
 >
 > 使用 **GetEnumAttributes** 引用trait
+> 能够快速提取枚举注解对象
 >
 
 ~~~php
@@ -182,6 +183,8 @@ $res = \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getEnumCaseAttributes(Err
 // 获取枚举注解 返回是一个对象
 /** @var ErrorCode|null $res */
 $res = \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getEnumCaseAttribute(ErrorCode::class);
+
+
 
 
 ~~~
