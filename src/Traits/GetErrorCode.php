@@ -32,7 +32,7 @@ trait GetErrorCode
      */
     protected function getErrorCodePrefix(int $get = 0): ?ErrorCodePrefix
     {
-        return $this->getEnumAttribute(ErrorCodePrefix::class, $get);
+        return static::getEnumAttribute(ErrorCodePrefix::class, $get);
     }
 
     /**
@@ -105,5 +105,50 @@ trait GetErrorCode
         return $this->getErrorCodePrefix()?->prefix;
     }
 
+    /**
+     * 通过错误码获取错误枚举
+     *
+     * @author XJ.
+     * @Date   2024/2/26 0026
+     *
+     * @param int $code
+     *
+     * @return $this
+     */
+    public static function fromByCode(int $code): static
+    {
+        return static::from(static::getRealCode($code));
+    }
+
+    /**
+     * 通过错误码获取错误枚举
+     *
+     * @author XJ.
+     * @Date   2024/2/26 0026
+     *
+     * @param int $code
+     *
+     * @return $this
+     */
+    public static function tryFormByCode(int $code): ?static
+    {
+        return static::tryFrom(static::getRealCode($code));
+    }
+
+    /**
+     * 获取真实错误码
+     *
+     * @author XJ.
+     * @Date   2024/2/26 0026
+     *
+     * @param int $code
+     *
+     * @return int
+     */
+    public static function getRealCode(int $code): int
+    {
+        return (int)substr((string)$code, (string)strlen(static::getEnumAttribute(ErrorCodePrefix::class)?->prefix ?? ''), -1);
+
+    }
 
 }

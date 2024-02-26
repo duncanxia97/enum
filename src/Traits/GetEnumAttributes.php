@@ -22,11 +22,11 @@ trait GetEnumAttributes
      * @return array|T[]
      * @throws \ReflectionException
      */
-    public function getEnumAttributes(string $attribute): array
+    public static function getEnumAttributes(string $attribute): array
     {
         return array_map(
             fn($reflectionAttribute) => $reflectionAttribute->newInstance(),
-            (new ReflectionEnum($this))
+            (new ReflectionEnum(static::class))
                 ->getAttributes($attribute)
         );
     }
@@ -40,9 +40,9 @@ trait GetEnumAttributes
      *
      * @return object|null|T
      */
-    public function getEnumAttribute(string $attribute, int $get = 0): ?object
+    public static function getEnumAttribute(string $attribute, int $get = 0): ?object
     {
-        return ((new ReflectionEnum($this))
+        return ((new ReflectionEnum(static::class))
                     ->getAttributes($attribute)[$get] ?? null)
             ?->newInstance();
     }
