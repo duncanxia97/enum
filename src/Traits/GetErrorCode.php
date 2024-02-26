@@ -147,8 +147,7 @@ trait GetErrorCode
      */
     public static function getRealCode(int $code): int
     {
-        return (int)substr((string)$code, (string)strlen(static::getEnumAttribute(ErrorCodePrefix::class)?->prefix ?? ''), -1);
-
+        return (int)substr((string)$code, strlen(static::getEnumAttribute(ErrorCodePrefix::class)?->prefix ?? ''));
     }
 
 }
