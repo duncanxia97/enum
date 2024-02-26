@@ -172,7 +172,7 @@ use Fatbit\Enums\Annotations\ErrorCodePrefix;
 
 // 获取枚举对象注解 返回是一个数组
 /** @var ErrorCodePrefix[]|array $res */
-$res = \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getEnumAttributes(ErrorCodePrefix::class);
+$res = \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR::getEnumAttributes(ErrorCodePrefix::class);
 // 获取枚举对象注解 返回是一个对象
 /** @var ErrorCodePrefix|null $res */
 $res = \Fatbit\Enums\Demo\DemoErrorCode::SYSTEM_ERROR->getEnumAttribute(ErrorCodePrefix::class);
