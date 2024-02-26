@@ -54,5 +54,5 @@ interface ErrorCodeInterface
      *
      * @return static|null
      */
-    public static function tryFormByCode(int $code): ?static;
+    public static function tryFromByCode(int $code): ?static;
 }

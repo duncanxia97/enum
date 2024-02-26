@@ -130,7 +130,7 @@ trait GetErrorCode
      *
      * @return $this
      */
-    public static function tryFormByCode(int $code): ?static
+    public static function tryFromByCode(int $code): ?static
     {
         return static::tryFrom(static::getRealCode($code));
     }
