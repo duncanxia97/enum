@@ -11,6 +11,9 @@ use Fatbit\Enums\Utils\EnumGroups;
 use ReflectionEnum;
 use ReflectionEnumUnitCase;
 
+/**
+ * @mixin \BackedEnum
+ */
 trait EnumCaseGet
 {
     use GetEnumAttributes;
@@ -130,20 +133,18 @@ trait EnumCaseGet
      * @return array
      * @throws \ReflectionException
      */
-    protected static function loadGroups(object|string $enum): array
+    protected static function loadGroups(): array
     {
-        $enum = new ReflectionEnum($enum);
-        if (EnumGroups::issetGroups($enum->getName())) {
-            return EnumGroups::getGroups($enum->getName());
+        $class = static::class;
+        if (EnumGroups::issetGroups($class)) {
+            return EnumGroups::getGroups($class);
         }
-        $enumCases = $enum->getCases();
-        foreach ($enumCases as $enumCase) {
+        foreach (static::cases() as $case) {
             /** @var self $case */
-            $case = $enumCase->getValue();
-            EnumGroups::setGroups($enum->getName(), $case->getEnumCase()?->group, $case->name(), $case);
+            EnumGroups::setGroups($class, $case->getEnumCase()?->group, $case->name(), $case);
         }
 
-        return EnumGroups::getGroups($enum->getName());
+        return EnumGroups::getGroups($class);
     }
 
     /**
@@ -155,16 +156,86 @@ trait EnumCaseGet
      * @param string|int      $groupName
      * @param string|int|null $name
      *
-     * @return array|EnumCaseGet
+     * @return array|static|static[]|null
      * @throws \ReflectionException
      */
     public static function group(string|int $groupName, string|int $name = null): array|static|null
     {
-        $groups = self::loadGroups(static::class);
+        $groups = static::loadGroups();
         if ($name !== null) {
-            return self::group($groupName)[$name] ?? null;
+            return static::group($groupName)[$name] ?? null;
         }
 
         return $groups[$groupName] ?? null;
+    }
+
+    /**
+     * 通过字段获取枚举
+     * @author XJ.
+     * @Date   2024/12/3 星期二
+     *
+     * @param string      $field     字段名
+     * @param string|null $groupName 分组名(如果设置了分组)
+     *
+     * @return array|static[]
+     */
+    public static function keyBy(string $field, ?string $groupName = null): array
+    {
+        $result = [];
+        $getKey = function (self $case, $field) {
+            $data = $case->toArray();
+            if (isset($data[$field])) {
+                return $data[$field];
+            }
+            if (isset($data['ext'][$field])) {
+                return $data['ext'][$field];
+            }
+
+            return null;
+        };
+        if (!is_null($groupName)) {
+            $group = static::group($groupName) ?: [];
+            foreach ($group as $case) {
+                $key = $getKey($case, $field);
+                if (!is_null($key)) {
+                    $result[$key] = $case;
+                }
+            }
+
+            return $result;
+        }
+        foreach (static::cases() as $case) {
+            $key = $getKey($case, $field);
+            if (!is_null($key)) {
+                $result[$key] = $case;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * 通过值获取枚举
+     * @author XJ.
+     * @Date   2024/12/3 星期二
+     *
+     * @param             $value
+     * @param string|null $field
+     * @param string|null $groupName
+     *
+     * @return static|null
+     */
+    public static function fromBy($value, ?string $field = null, ?string $groupName = null): ?static
+    {
+        if (is_null($field) && is_null($groupName)) {
+            if (static::class instanceof \BackedEnum) {
+                return static::tryFrom($value);
+            }
+
+            return null;
+        }
+        $cases = self::keyBy($field, $groupName);
+
+        return $cases[$value] ?? null;
     }
 }
