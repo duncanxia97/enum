@@ -63,6 +63,17 @@ trait GetErrorCode
     }
 
     /**
+     * 获取错误码http状态码
+     * @author XJ.
+     * @Date   2025/6/16
+     * @return int
+     */
+    public function getHttpCode(): int
+    {
+        return $this->getErrorCode()?->httpCode ?? 500;
+    }
+
+    /**
      * 获取错误码
      *
      * @author XJ.

@@ -13,7 +13,7 @@ class ErrorCode
 {
     public function __construct(
         public readonly ?string $desc = null,
-        public readonly ?int    $code = 500,
+        public readonly ?int    $httpCode = 500,
     ) {
     }
 
