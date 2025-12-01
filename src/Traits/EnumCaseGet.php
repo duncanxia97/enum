@@ -16,7 +16,7 @@ use ReflectionEnumUnitCase;
  */
 trait EnumCaseGet
 {
-    use GetEnumAttributes;
+    use GetEnumAttributes, EnumCaseComparable;
 
     /**
      * 获取枚举解释
@@ -161,7 +161,7 @@ trait EnumCaseGet
      */
     public static function group(string|int $groupName, string|int $name = null): array|static|null
     {
-        $groups = static::loadGroups();
+        $groups = static::getGroups();
         if ($name !== null) {
             return static::group($groupName)[$name] ?? null;
         }
@@ -170,7 +170,21 @@ trait EnumCaseGet
     }
 
     /**
+     * 获取分组所有数据
+     *
+     * @author XJ.
+     * @Date   2025/12/1
+     * @return array
+     * @throws \ReflectionException
+     */
+    public static function getGroups(): array
+    {
+        return static::loadGroups();
+    }
+
+    /**
      * 通过字段获取枚举
+     *
      * @author XJ.
      * @Date   2024/12/3 星期二
      *
@@ -179,7 +193,7 @@ trait EnumCaseGet
      *
      * @return array|static[]
      */
-    public static function keyBy(string $field, ?string $groupName = null): array
+    public static function keyBy(string $field, ?string $groupName = null, bool $append = false): array
     {
         $result = [];
         $getKey = function (self $case, $field) {
@@ -197,18 +211,34 @@ trait EnumCaseGet
             $group = static::group($groupName) ?: [];
             foreach ($group as $case) {
                 $key = $getKey($case, $field);
-                if (!is_null($key)) {
-                    $result[$key] = $case;
+                if (is_null($key)) {
+                    continue;
                 }
+                if ($append) {
+                    if (!isset($result[$key])) {
+                        $result[$key] = [];
+                    }
+                    $result[$key][] = $case;
+                    continue;
+                }
+                $result[$key] = $case;
             }
 
             return $result;
         }
         foreach (static::cases() as $case) {
             $key = $getKey($case, $field);
-            if (!is_null($key)) {
-                $result[$key] = $case;
+            if (is_null($key)) {
+                continue;
             }
+            if ($append) {
+                if (!isset($result[$key])) {
+                    $result[$key] = [];
+                }
+                $result[$key][] = $case;
+                continue;
+            }
+            $result[$key] = $case;
         }
 
         return $result;
@@ -216,6 +246,7 @@ trait EnumCaseGet
 
     /**
      * 通过值获取枚举
+     *
      * @author XJ.
      * @Date   2024/12/3 星期二
      *
