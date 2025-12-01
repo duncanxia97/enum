@@ -1,6 +1,6 @@
 {
   "name": "fatbit/enums",
-  "description": "this is php8.1 enum ext",
+  "description": "powerful php enums for php8.1",
   "keywords": ["php8.1", "enum"],
   "minimum-stability": "stable",
   "type": "sdk",
